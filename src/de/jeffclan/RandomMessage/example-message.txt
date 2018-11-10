@@ -1,0 +1,3 @@
+&aThank your using &e&lRandomMessage&r&a!
+
+&eYou can add messages in the plugins/RandomMessage/messages folder

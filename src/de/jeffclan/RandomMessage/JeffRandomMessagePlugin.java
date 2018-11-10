@@ -6,19 +6,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.plugin.java.JavaPlugin;
 
-
 public class JeffRandomMessagePlugin extends JavaPlugin {
 
 	private boolean usingMatchingConfig = true;
 	private int currentConfigVersion = 1;
-	
+
 	private int currentMessage = 0;
 
 	private ArrayList<String[]> broadcasts;
@@ -26,51 +24,55 @@ public class JeffRandomMessagePlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 
-		broadcasts = new ArrayList<String[]>();
-
 		createConfig();
 		loadMessages();
-		
+
+		getCommand("randommessage").setExecutor(new JeffRandomMessageCommandExecutor(this));
+
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
 				String[] message = getNextMessage();
-				if(message != null) {
+				if (message != null) {
 					broadcastMessage(message);
 				}
-				
+
 			}
-		}, 0, getConfig().getLong("delay")*20);
+		}, 0, getConfig().getLong("delay") * 20);
 
 	}
-	
+
 	public String[] getNextMessage() {
-		if(broadcasts.size()==0) {
+		if (broadcasts.size() == 0) {
 			return null;
 		}
-		if(currentMessage >= broadcasts.size()) {
+		if (currentMessage >= broadcasts.size()) {
 			currentMessage = 0;
-			if(getConfig().getBoolean("random-order")) {
+			if (getConfig().getBoolean("random-order")) {
 				Collections.shuffle(broadcasts);
 			}
 		}
 		currentMessage++;
-		return broadcasts.get(currentMessage-1);
-		
+		return broadcasts.get(currentMessage - 1);
+
 	}
-	
+
 	public void broadcastMessage(String[] text) {
-		for(String line : text) {
-			getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&',line));
+		for (String line : text) {
+			getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', line));
 		}
 	}
-	
 
-	private void loadMessages() {
+	protected void loadMessages() {
+
+		broadcasts = new ArrayList<String[]>();
+
+		currentMessage = 0;
 
 		File messagesFolder = new File(
 				getDataFolder().getAbsolutePath() + File.separator + "messages" + File.separator);
+
 		File[] listOfMessageFiles = messagesFolder.listFiles();
-		
+
 		Arrays.sort(listOfMessageFiles);
 
 		for (File file : listOfMessageFiles) {
@@ -84,12 +86,13 @@ public class JeffRandomMessagePlugin extends JavaPlugin {
 				}
 			}
 		}
-		
-		if(getConfig().getBoolean("random-order")) {
+
+		if (getConfig().getBoolean("random-order")) {
 			Collections.shuffle(broadcasts);
 		}
-		
-		getLogger().info(String.format("%d messages loaded. Broadcasting started with %d seconds delay.", broadcasts.size(), getConfig().getLong("delay")));
+
+		getLogger().info(String.format("%d messages loaded. Broadcasting started with %d seconds delay.",
+				broadcasts.size(), getConfig().getLong("delay")));
 
 	}
 

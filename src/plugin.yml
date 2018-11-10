@@ -6,3 +6,11 @@ description: Broadcasts messages in defined or random order
 author: mfnalex
 prefix: RandomMessage
 database: false
+commands:
+  randommessage:
+    description: Reloads the message files
+    usage: /<command>
+    permission: randommessage.reload
+  permissions:
+    randommessage.reload:
+      description: Allows usage of the /randommessage command
