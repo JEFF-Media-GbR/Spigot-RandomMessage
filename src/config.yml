@@ -1,0 +1,58 @@
+#########################
+##### RandomMessage #####
+#########################
+
+# The delay between messages in seconds.
+# 60  = 1 minute      1200  = 20 minutes
+# 120 = 2 minutes     1800  = 30 minutes
+# 180 = 3 minutes     2700  = 45 minutes
+# 300 = 5 minutes     3600  = 1 hour
+# 600 = 10 minutes    7200  = 2 hours
+# 900 = 15 minutes    10800 = 3 hours
+delay: 300
+
+# when set to true, messages will be sent in a random order that changes
+# everytime once every message has been sent.
+# when set to false, messages will be sent alphabetically by their
+# file names. You can order them by prefixing them with 001, 002 etc.
+random-order: true
+
+# should we check for updates?
+# when enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they
+# join the server
+# When set to true, we will check for updates on startup and every 24 hours
+# When set to on-startup, we will only check on startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+#########################
+#####   messages   ######
+#########################
+
+# You can create text files in the messages directory.
+# Each file ending with .txt will be used by RandomMessage.
+# Every line will be printed separately.
+
+# The following formatting codes are allowed:
+
+# Available color codes:
+# &0 Black        &6 Gold       &c Red
+# &1 Dark Blue    &7 Gray       &d Light Purple
+# &2 Dark Green   &8 Dark Gray  &e Yellow
+# &3 Dark Aqua    &9 Blue       &f White
+# &4 Dark Red     &a Green     
+# &5 Dark Purple  &b Aqua
+
+# Available formatting codes:
+# &k Obfuscated   &m Strikethrough
+# &l Bold         &o Italic
+# &n Underline    &r Reset
+
+
+#########################
+#####     Done!     #####
+#########################
+
+# please do not change the following line manually!
+config-version: 1
